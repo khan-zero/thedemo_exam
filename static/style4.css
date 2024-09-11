@@ -1,0 +1,101 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body styling */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* Main container */
+main {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+}
+
+/* Header styling */
+header h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #2C3E50;
+}
+
+/* Form section */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Input field styling */
+.form-control {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3498DB;
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.3);
+}
+
+/* Button styles */
+.button {
+    padding: 10px 15px;
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.button:hover {
+    background-color: #2980B9;
+}
+
+/* Cancel button styling */
+.button2 {
+    background-color: #E74C3C;
+}
+
+.button2:hover {
+    background-color: #C0392B;
+}
+
+/* Align buttons horizontally */
+form button, form .button2 {
+    width: 100px;
+    margin-top: 10px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    main {
+        width: 90%;
+        margin: 20px auto;
+        padding: 15px;
+    }
+
+    form button, form .button2 {
+        width: 100%;
+    }
+}
+

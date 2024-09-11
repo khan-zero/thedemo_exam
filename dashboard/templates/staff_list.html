@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff List</title>
+</head>
+<style>
+
+body {
+    background-color: blue; /* For browsers that do not support gradients */
+    background-image: linear-gradient(to bottom right, black, darkblue);
+    color: #ffffff;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+th, td {
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+}
+
+th {
+    background-color: #2C3E50;
+    color: white;
+}
+
+tr:nth-child(even) {
+    background-color: #333;
+}
+
+tr:hover {
+    background-color: #ddd;
+}
+
+/* Button styling */
+.button {
+    padding: 8px 16px;
+    margin-right: 10px;
+    background-color: #3498DB;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #2980B9;
+}
+
+.button2 {
+    background-color: #E74C3C;
+}
+
+.button2:hover {
+    background-color: #C0392B;
+}
+
+</style>
+<body>
+    <main>
+        <header>
+            <br>
+            <h1>Staff List</h1>
+            <a href="{% url 'staff_create' %}" class="button">Add New Staff</a>
+            <a href="{% url 'index' %}" class="button">Return to Home</a>
+        </header>
+        <section>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Full Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Position</th>
+                        <th>Start Date</th>
+                        <th>Active</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for staff in staff_members %}
+                    <tr>
+                        <td>{{ staff.id }}</td>
+                        <td>{{ staff.full_name }}</td>
+                        <td>{{ staff.phone }}</td>
+                        <td>{{ staff.email }}</td>
+                        <td>{{ staff.position.name }}</td>
+                        <td>{{ staff.start_date }}</td>
+                        <td>{{ staff.is_active }}</td>
+                        <td>
+                            <a href="{% url 'staff_edit' staff.id %}" class="button">Edit</a>
+                            <a href="{% url 'staff_delete' staff.id %}" class="button button2">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8">No staff members available</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
+

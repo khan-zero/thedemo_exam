@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Staff</title>
+    <link rel="stylesheet" href="{% static 'style3.css' %}">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Delete Staff</h1>
+        </header>
+        <section>
+            <p>Are you sure you want to delete the staff member "{{ staff.full_name }}"?</p>
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="button button2">Confirm</button>
+                <a href="{% url 'staff_list' %}" class="button">Cancel</a>
+            </form>
+        </section>
+    </main>
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Shifts</title>
+    <link rel="stylesheet" href="{% static 'style3.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Staff Shifts</h1>
+        <nav>
+            <a href="{% url 'index' %}" class="button">Return to Home</a>
+        </nav>
+    </header>
+    <main>
+        <table>
+            <thead>
+                <tr>
+                    <th>Full Name</th>
+                    <th>Position</th>
+                    <th>Shift Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for staff_member in staff %}
+                <tr>
+                    <td>{{ staff_member.full_name }}</td>
+                    <td>{{ staff_member.position }}</td>
+                    <td>{{ staff_member.shift.time }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="3">No staff shifts available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </main>
+</body>
+</html>

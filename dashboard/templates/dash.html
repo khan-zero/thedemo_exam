@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRM Dashboard</title>
+    <link rel="stylesheet" href="{% static 'style1.css' %}">
+    <!-- Include Bootstrap or any CSS framework -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="position-sticky">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{% url 'index' %}">
+                            <span data-feather="home"></span>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'staff_list' %}">
+                            <span data-feather="users"></span>
+                            Staff Management
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'position_list' %}">
+                            <span data-feather="layers"></span>
+                            Positions
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'shift_list' %}">
+                            <span data-feather="clock"></span>
+                            Shifts
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'staff_shift_list' %}">
+                            <span data-feather="shuffle"></span>
+                            Shift Assignments
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'attendance_list' %}">
+                            <span data-feather="check-circle"></span>
+                            Attendance (View Only)
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">Dashboard</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm gradient-table">
+                        <div class="card-header">
+                            <h4 class="my-0 fw-normal">Staff Overview</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Total staff: {{staff.count}}</li>
+                                <li>Active Shifts: {{active_shifts}}</li>
+                                <li>Recent Attendance Entries: 5</li>
+                            </ul>
+                            <a href="#staff_list" class="btn btn-lg btn-primary">Manage Staff</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm gradient-table">
+                        <div class="card-header">
+                            <h4 class="my-0 fw-normal">Shift Management</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                <li>Shifts Scheduled: {{ shifts_scheduled }}</li>
+                                <li>Active Shift Assignments: {{active_shift_type}}</li>
+                            </ul>
+                            <a href="{% url 'shift_list' %}" class="btn btn-lg btn-primary">Manage Shifts</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card mb-4 shadow-sm gradient-table">
+                        <div class="card-header">
+                            <h4 class="my-0 fw-normal">Available Models:</h4>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled mt-3 mb-4">
+                                {% for model_name in model_names %}
+                                <li>{{ forloop.counter}}: {{ model_name }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Recent Staff Attendance</h2>
+            <section id="about">
+                <div class="table-responsive">
+                    <table class="table table-striped table-sm gradient-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Staff Name</th>
+                                <th>Position</th>
+                                <th>Shift</th>
+                                <th>Date</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for employee in staff %}
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ employee.full_name }}</td>
+                            <td>{{ employee.position.name }}</td>
+                            <td>{{ employee.shift.shift }}</td>
+                            <td>{{ employee.shift.time }}</td>
+                            <td>
+                                {% for attendance in employee.staffattendance_set.all %}
+                                    <button class="toggle-attendance {% if attendance.present %}button-present{% else %}button-absent{% endif %}"
+                                            data-id="{{ attendance.id }}">
+                                        {% if attendance.present %}
+                                            Present
+                                        {% else %}
+                                            Absent
+                                        {% endif %}
+                                    </button>
+                                {% endfor %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/feather-icons"></script>
+<script>
+    feather.replace()
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).on('click', '.toggle-attendance', function() {
+        var button = $(this);
+        var attendanceId = button.data('id');
+
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'toggle_attendance' %}",
+            data: {
+                'attendance_id': attendanceId,
+                'csrfmiddlewaretoken': '{{ csrf_token }}',
+            },
+            success: function(response) {
+                if (response.present) {
+                    button.text('Present');
+                    button.removeClass('button-absent').addClass('button-present');
+                } else {
+                    button.text('Absent');
+                    button.removeClass('button-present').addClass('button-absent');
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#generate-data-btn').click(function() {
+            $.ajax({
+                url: "{% url 'generate_fake_data' %}",
+                method: 'POST',  // Changed to POST to match API view method
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}'  // Include CSRF token if needed
+                },
+                success: function(response) {
+                    alert('Fake data generated successfully!');
+                },
+                error: function(xhr, status, error) {
+                    alert('An error occurred: ' + error);
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>

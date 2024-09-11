@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{%load static%}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Shift</title>
+    <link rel="stylesheet" href="{% static 'style3.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Confirm Delete</h1>
+        <nav>
+            <a href="{% url 'shift_list' %}">Back to Shifts</a>
+        </nav>
+    </header>
+    <main>
+        <p>Are you sure you want to delete the shift "{{ shift }}"?</p>
+        <form method="post">
+            {% csrf_token %}
+            <button type="submit">Confirm</button>
+            <a href="{% url 'shift_list' %}">Cancel</a>
+        </form>
+    </main>
+    <footer>
+        <p>&copy; 2024 My Project</p>
+    </footer>
+</body>
+</html>

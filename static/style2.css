@@ -1,0 +1,90 @@
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Body Styling */
+body {
+    background: linear-gradient(135deg, #0f0f0f, #1c1c1c, #2e2e2e); /* Dark gradient */
+    color: #ffffff;
+    font-size: 16px;
+    min-height: 100vh;
+    overflow-x: hidden;
+    padding: 20px;
+}
+
+/* Header Styling */
+header h1 {
+    color: #800080; /* Purple Heading */
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+/* Shift List Styling */
+.shift-list {
+    background: rgba(0, 0, 0, 0.8); /* Black with transparency */
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+}
+
+.shift-list table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.shift-list th, .shift-list td {
+    border: 1px solid #000080; /* Dark blue border */
+    padding: 12px;
+    text-align: left;
+}
+
+.shift-list thead th {
+    background-color: #000080; /* Dark blue background */
+    color: #fff;
+}
+
+.shift-list tbody tr:nth-child(even) {
+    background-color: #1e1e1e; /* Alternating row color */
+}
+
+.shift-list tbody tr:hover {
+    background-color: rgba(0, 0, 128, 0.2); /* Dark blue hover effect */
+}
+
+.button {
+    background-color: transparent; /* Transparent background */
+    border: 2px solid green; /* Green border */
+    color: green; /* Green text */
+    padding: 5px 10px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 5px;
+    transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.button:hover {
+    color: white; /* White text on hover */
+    background-color: green; /* Green background on hover */
+    border-color: green; /* Green border on hover */
+    box-shadow: 0 4px 15px rgba(0, 128, 0, 0.5); /* Green shadow effect */
+}
+
+.button.button2 {
+    border-color: red; /* Red border */
+    color: red; /* Red text */
+}
+
+.button.button2:hover {
+    color: white; /* White text on hover */
+    background-color: red; /* Red background on hover */
+    border-color: red; /* Red border on hover */
+    box-shadow: 0 4px 15px rgba(255, 0, 0, 0.5); /* Red shadow effect */
+}
+

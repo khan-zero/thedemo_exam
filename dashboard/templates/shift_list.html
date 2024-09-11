@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shift List</title>
+    <link rel="stylesheet" href="{% static 'style5.css' %}">
+</head>
+<body>
+    <main>
+        <header>
+            <h1>Shift List</h1>
+        </header>
+        <section>
+            <!-- Search and Filter Form -->
+            <form method="GET" action="{% url 'shift_list' %}">
+                <input type="text" name="q" placeholder="Search by name or time" value="{{ request.GET.q }}">
+                <input type="date" name="start_date" placeholder="Start date" value="{{ request.GET.start_date }}">
+                <input type="date" name="end_date" placeholder="End date" value="{{ request.GET.end_date }}">
+                <button type="submit" class="button">Search</button>
+            </form>
+                 <a href="{% url 'index' %}">
+                     <button class="button">Back To Home</button>
+                 </a>
+            <!-- Shift Table -->
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Shift Type</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for shift in shifts %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ shift.shift_type }}</td>
+                        <td>{{ shift.time }}</td>
+                        <td>{{ shift.end_time }}</td>
+                        <td>
+                            <a href="{% url 'shift_edit' shift.id %}" class="button">Edit</a>
+                            <a href="{% url 'shift_delete' shift.id %}" class="button button2">Delete</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5">No shifts found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </main>
+</body>
+</html>
